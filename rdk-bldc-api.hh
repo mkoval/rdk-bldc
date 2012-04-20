@@ -25,7 +25,8 @@ struct Command {
 
 struct Param {
     typedef enum {
-        kTargetSpeed = 0x04
+        kTargetSpeed = 0x04,
+        kUseDynamicBrake = 0x29
     } Enum;
 };
 

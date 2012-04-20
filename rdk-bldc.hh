@@ -12,6 +12,7 @@ public:
     void run(void);
     void stop(void);
     void setSpeed(uint32_t speed);
+    void brake(bool braking);
 
 private:
     static std::vector<uint8_t> const empty;
