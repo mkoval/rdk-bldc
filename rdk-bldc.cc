@@ -50,10 +50,6 @@ void MotorController::brake(bool braking)
     send(Command::kSetParamValue, byte_(Param::kUseDynamicBrake) << byte_(braking));
 }
 
-//          HH LL CC -- -- -- -- SS
-// CORRECT: ff 09 13 04 58 1b 00 00 6e for v = 7000
-//          ff 09 13 04 58 1b 00 00 a2
-
 template <typename Generator>
 void MotorController::send(Command::Enum cmd, Generator generator)
 {
@@ -68,19 +64,11 @@ void MotorController::send(Command::Enum cmd, Generator generator)
     assert(success);
     assert(buffer.size() <= 255);
 
-    //
     uint8_t checksum = 0;
     for (size_t i = 0; i < buffer.size(); i++) {
         checksum += buffer[i];
     }
     buffer[buffer.size() - 1] = (255 - checksum) + 1;
-
-    //
-    for (size_t i = 0; i < buffer.size(); i++) {
-        std::cout << std::hex << std::setfill('0') << std::setw(2)
-                  << static_cast<int>(buffer[i]);
-    }
-    std::cout << std::endl;
 
     boost::asio::write(*socket_, boost::asio::buffer(buffer));
 }
