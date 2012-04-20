@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     }
 
     MotorController motor(argv[1], argv[2]);
-    motor.run();
     motor.setSpeed(500);
+    motor.run();
     return 0;
 }

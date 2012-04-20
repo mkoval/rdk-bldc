@@ -15,7 +15,7 @@ MotorController::MotorController(std::string host, std::string port)
 {
     // Resolve the IP address associated with the hostname.
     tcp::resolver resolver(service_);
-    tcp::resolver::query query(tcp::v4(), host.c_str(), port);
+    tcp::resolver::query query(tcp::v4(), host, port);
     tcp::resolver::iterator query_it = resolver.resolve(query);
 
     // Open the socket.
