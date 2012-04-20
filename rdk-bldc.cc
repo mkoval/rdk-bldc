@@ -46,8 +46,8 @@ void MotorController::send(Command::Enum cmd, InputIterator begin, InputIterator
     buf.reserve(4 + length);
     buf.push_back(0xFF);
     buf.push_back(cmd);
-    //buf.insert(buf.end(), begin, end);
+    buf.insert(buf.end(), begin, end);
     buf.push_back(checksum);
 
-    //socket_.send(std::streambuf(message));
+    boost::asio::write(*socket_, boost::asio::buffer(buf));
 }
