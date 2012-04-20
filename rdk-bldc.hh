@@ -11,17 +11,15 @@ public:
 
     void run(void);
     void stop(void);
+    void setSpeed(uint32_t speed);
 
 private:
     static std::vector<uint8_t> const empty;
     boost::asio::io_service service_;
     boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
 
-    template <typename InputIterator>
-    void send(Command::Enum command, InputIterator begin, InputIterator end);
-
-    template <typename InputIterator>
-    void setParam(Param::Enum param, InputIterator begin, InputIterator end);
+    template <typename Generator>
+    void send(Command::Enum cmd, Generator generator);
 };
 
 #endif

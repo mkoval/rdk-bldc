@@ -25,7 +25,7 @@ struct Command {
 
 struct Param {
     typedef enum {
-        kStepMode = 0x24
+        kTargetSpeed = 0x04
     } Enum;
 };
 

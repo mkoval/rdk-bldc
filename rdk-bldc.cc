@@ -1,9 +1,13 @@
 #include <boost/asio.hpp>
+#include <boost/spirit/include/karma.hpp>
 #include "rdk-bldc.hh"
 #include "rdk-bldc-api.hh"
 
 using namespace boost::asio;
 using namespace boost::asio::ip;
+
+using boost::spirit::karma::eps;
+using boost::spirit::karma::little_dword;
 
 std::vector<uint8_t> const MotorController::empty;
 
@@ -25,29 +29,27 @@ MotorController::~MotorController(void)
 
 void MotorController::run(void)
 {
-    send(Command::kRun, empty.begin(), empty.end());
+    send(Command::kRun, eps);
 }
 
 void MotorController::stop(void)
 {
-    send(Command::kStop, empty.begin(), empty.end());
+    send(Command::kStop, eps);
 }
 
-template <typename InputIterator>
-void MotorController::send(Command::Enum cmd, InputIterator begin, InputIterator end)
+void MotorController::setSpeed(uint32_t speed)
 {
-    uint8_t length = end - begin;
-    uint8_t checksum = length + cmd;
-    for (InputIterator it = begin; it != end; it++) {
-        checksum += *it;
-    }
+    send(Command::kSetParamValue, little_dword(speed));
+}
 
-    std::vector<uint8_t> buf;
-    buf.reserve(4 + length);
-    buf.push_back(0xFF);
-    buf.push_back(cmd);
-    buf.insert(buf.end(), begin, end);
-    buf.push_back(checksum);
+template <typename Generator>
+void MotorController::send(Command::Enum cmd, Generator generator)
+{
+    std::vector<uint8_t> buffer;
+    std::back_insert_iterator<std::vector<uint8_t> > iterator(buffer);
 
-    boost::asio::write(*socket_, boost::asio::buffer(buf));
+    bool success = boost::spirit::karma::generate(iterator, generator);
+    assert(success);
+
+    boost::asio::write(*socket_, boost::asio::buffer(buffer));
 }
