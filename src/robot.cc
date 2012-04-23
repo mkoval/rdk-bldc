@@ -9,9 +9,14 @@ inline T sgn(T x)
 }
 
 Robot::Robot(boost::shared_ptr<MotorController> driver_left,
-             boost::shared_ptr<MotorController> driver_right)
+      boost::shared_ptr<MotorController> driver_right,
+      double wheel_radius, double robot_radius,
+      double max_accel)
     : driver_left_(driver_left)
     , driver_right_(driver_right)
+    , robot_radius_(robot_radius)
+    , wheel_radius_(wheel_radius)
+    , max_accel_(max_accel)
     , target_left_(0)
     , target_right_(0)
     , current_left_(0)

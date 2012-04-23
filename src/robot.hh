@@ -6,7 +6,9 @@
 class Robot {
 public:
     Robot(boost::shared_ptr<MotorController> driver_left,
-          boost::shared_ptr<MotorController> driver_right);
+          boost::shared_ptr<MotorController> driver_right,
+          double wheel_radius, double robot_radius,
+          double max_accel);
 
     void stop(void);
     void spin(double period_ms);
