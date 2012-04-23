@@ -1,3 +1,5 @@
 *.d
 *.o
 /rdk-bldc
+/bin/
+/build/
