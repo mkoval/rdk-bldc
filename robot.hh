@@ -1,5 +1,6 @@
 #ifndef ROBOT_HH_
 #define ROBOT_HH_
+#include <boost/shared_ptr.hpp>
 #include "rdk-bldc.hh"
 
 class Robot {

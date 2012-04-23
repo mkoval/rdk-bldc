@@ -2,6 +2,7 @@
 #define RDK_BLDC_HH_
 
 #include <boost/asio.hpp>
+#include <boost/shared_ptr.hpp>
 #include "rdk-bldc-api.hh"
 
 class MotorController {
