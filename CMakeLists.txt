@@ -12,4 +12,4 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_gensrv()
 
 rosbuild_add_executable(dar_driver_node src/rdk-bldc.cc src/robot.cc src/main.cc)
-rosbuild_link_boost(dar_driver_node system thread)
+rosbuild_link_boost(dar_driver_node system)
