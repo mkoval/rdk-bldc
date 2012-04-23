@@ -1,0 +1,8 @@
+<package>
+    <description brief="RDK-BLDC Motor Controller Driver"></description>
+    <author>Michael Koval</author>
+    <license>BSD</license>
+    <url></url>
+    <depend package="nav_msgs"/>
+    <depend package="roscpp"/>
+</package>
