@@ -4,7 +4,8 @@ ALL_CXXFLAGS = -Wall -flto -MMD -O3 $(CFLAGS)
 ALL_LDFLAGS = -lboost_system-mt -lboost_thread-mt $(LDFLAGS)
 
 TARGET = rdk-bldc
-OBJECTS = main.cc rdk-bldc.cc
+SOURCE = main.cc robot.cc rdk-bldc.cc
+OBJECTS = $(SOURCE:=.o)
 
 $(TARGET): $(OBJECTS)
 	$(LD) $(ALL_CXXFLAGS) $(ALL_LDFLAGS) -o $@ $^

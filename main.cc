@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     //motor.setSpeed(7000);
     //motor.run();
 
-    motor.brake(true);
+    //motor.brake(true);
     motor.stop();
     return 0;
 }
