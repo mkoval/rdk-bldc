@@ -1,7 +1,9 @@
 <launch>
-    <node pkg="rdk-bldc" type="dar_driver_node" name="dar_node">
-        <param name="ip_left" value="192.168.1.2"/>
-        <param name="ip_right" value="192.168.1.3"/>
-        <param name="port" value="23"/>
-    </node>
+    <group ns="drive">
+        <node pkg="rdk-bldc" type="dar_driver_node" name="dar_node">
+            <param name="ip_left" value="192.168.1.2"/>
+            <param name="ip_right" value="192.168.1.3"/>
+            <param name="port" value="23"/>
+        </node>
+    </group>
 </launch>

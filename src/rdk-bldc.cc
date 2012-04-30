@@ -40,14 +40,30 @@ void MotorController::stop(void)
     send(Command::kStop, eps);
 }
 
-void MotorController::setSpeed(uint32_t speed)
+void MotorController::clearFaults(void)
 {
-    send(Command::kSetParamValue, byte_(Param::kTargetSpeed) << little_dword(speed));
+    send(Command::kSetParamValue, byte_(Param::kFaultStatus) << byte_(0));
 }
 
-void MotorController::brake(bool braking)
+void MotorController::setSpeed(int64_t speed)
 {
-    send(Command::kSetParamValue, byte_(Param::kUseDynamicBrake) << byte_(braking));
+    assert(abs(speed) <= std::numeric_limits<uint32_t>::max());
+    uint32_t const magnitude = static_cast<uint32_t>(abs(speed));
+    uint8_t const direction = (speed < 0);
+
+    if (magnitude > 0) {
+        send(Command::kSetParamValue, byte_(Param::kDirection) << byte_(direction));
+        send(Command::kSetParamValue, byte_(Param::kTargetSpeed) << little_dword(magnitude));
+        run();
+    } else {
+        stop();
+    }
+}
+
+template <typename Generator>
+void MotorController::setParam(Param::Enum param, Generator generator)
+{
+    send(Command::kSetParamValue, byte_(param) << generator);
 }
 
 template <typename Generator>

@@ -12,13 +12,16 @@ public:
 
     void run(void);
     void stop(void);
-    void setSpeed(uint32_t speed);
-    void brake(bool braking);
+    void clearFaults(void);
+    void setSpeed(int64_t speed);
 
 private:
     static std::vector<uint8_t> const empty;
     boost::asio::io_service service_;
     boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
+
+    template <typename Generator>
+    void setParam(Param::Enum param, Generator generator);
 
     template <typename Generator>
     void send(Command::Enum cmd, Generator generator);

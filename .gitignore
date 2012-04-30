@@ -1,5 +1,7 @@
 *.d
 *.o
+*.swp
+*.swo
 /rdk-bldc
 /bin/
 /build/
