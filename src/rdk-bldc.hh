@@ -7,7 +7,7 @@
 
 class MotorController {
 public:
-    MotorController(std::string host, std::string port);
+    MotorController(std::string host, std::string port, bool flipped);
     ~MotorController(void);
 
     void run(void);
@@ -17,6 +17,8 @@ public:
 
 private:
     static std::vector<uint8_t> const empty;
+
+    int64_t sign_;
     boost::asio::io_service service_;
     boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
 

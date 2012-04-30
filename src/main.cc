@@ -26,16 +26,18 @@ int main(int argc, char **argv)
 
     std::string ip_left, ip_right, port;
     double wheel_radius, robot_radius;
+    bool flip_left, flip_right;
     nh_priv.param<std::string>("ip_left", ip_left, "192.168.1.101");
     nh_priv.param<std::string>("ip_right", ip_right, "192.168.1.102");
     nh_priv.param<std::string>("port", port, "23");
     nh_priv.param<double>("robot_radius", robot_radius, 0.5);
     nh_priv.param<double>("wheel_radius", wheel_radius, 0.2);
+    nh_priv.param<bool>("flip_left", flip_left, false);
+    nh_priv.param<bool>("flip_right", flip_right, false);
 
-    MotorControllerPtr driver_left  = boost::make_shared<MotorController>(ip_left, port);
-    MotorControllerPtr driver_right = boost::make_shared<MotorController>(ip_right, port);
+    MotorControllerPtr driver_left  = boost::make_shared<MotorController>(ip_left, port, flip_left);
+    MotorControllerPtr driver_right = boost::make_shared<MotorController>(ip_right, port, flip_right);
     robot = boost::make_shared<Robot>(driver_left, driver_right, robot_radius, wheel_radius);
-    ROS_INFO("Running.");
 
     ros::spin();
 

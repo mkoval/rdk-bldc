@@ -13,8 +13,8 @@ Robot::Robot(boost::shared_ptr<MotorController> driver_left,
              double wheel_radius, double robot_radius)
     : driver_left_(driver_left)
     , driver_right_(driver_right)
-    , robot_radius_(robot_radius)
     , wheel_radius_(wheel_radius)
+    , robot_radius_(robot_radius)
 {
     driver_left_->clearFaults();
     driver_right_->clearFaults();

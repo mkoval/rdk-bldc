@@ -14,7 +14,8 @@ using boost::spirit::karma::little_dword;
 
 std::vector<uint8_t> const MotorController::empty;
 
-MotorController::MotorController(std::string host, std::string port)
+MotorController::MotorController(std::string host, std::string port, bool flipped)
+    : sign_((flipped) ? -1 : +1)
 {
     // Resolve the IP address associated with the hostname.
     tcp::resolver resolver(service_);
@@ -23,7 +24,6 @@ MotorController::MotorController(std::string host, std::string port)
 
     // Open the socket.
     socket_ = boost::shared_ptr<tcp::socket>(new tcp::socket(service_));
-    socket_->connect(*query_it);
 }
 
 MotorController::~MotorController(void)
@@ -49,7 +49,7 @@ void MotorController::setSpeed(int64_t speed)
 {
     assert(abs(speed) <= std::numeric_limits<uint32_t>::max());
     uint32_t const magnitude = static_cast<uint32_t>(abs(speed));
-    uint8_t const direction = (speed < 0);
+    uint8_t const direction = (sign_ * speed < 0);
 
     if (magnitude > 0) {
         send(Command::kSetParamValue, byte_(Param::kDirection) << byte_(direction));
