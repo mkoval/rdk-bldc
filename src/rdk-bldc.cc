@@ -24,6 +24,7 @@ MotorController::MotorController(std::string host, std::string port, bool flippe
 
     // Open the socket.
     socket_ = boost::shared_ptr<tcp::socket>(new tcp::socket(service_));
+    socket_->connect(*query_it);
 }
 
 MotorController::~MotorController(void)
@@ -50,6 +51,9 @@ void MotorController::setSpeed(int64_t speed)
     assert(abs(speed) <= std::numeric_limits<uint32_t>::max());
     uint32_t const magnitude = static_cast<uint32_t>(abs(speed));
     uint8_t const direction = (sign_ * speed < 0);
+
+    std::cout << "speed = " << magnitude << ", "
+              << "direction = " << static_cast<int>(direction) << std::endl;
 
     if (magnitude > 0) {
         send(Command::kSetParamValue, byte_(Param::kDirection) << byte_(direction));
